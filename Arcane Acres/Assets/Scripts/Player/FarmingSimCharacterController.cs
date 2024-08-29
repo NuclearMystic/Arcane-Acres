@@ -67,6 +67,12 @@ public class FarmingSimCharacterController : MonoBehaviour
         float speed = Input.GetButton("Run") ? runSpeed : walkSpeed;
         moveDirection *= speed;
 
+        // Handle very small movement values (due to floating-point precision issues)
+        if (moveDirection.magnitude < 0.01f)
+        {
+            moveDirection = Vector3.zero;
+        }
+
         controller.Move(moveDirection * Time.deltaTime);
 
         // If the player is moving, rotate towards the movement direction
@@ -76,7 +82,6 @@ public class FarmingSimCharacterController : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, playerRotationSpeed * Time.deltaTime);
         }
     }
-
 
     void HandleGravity()
     {
@@ -96,12 +101,20 @@ public class FarmingSimCharacterController : MonoBehaviour
     void UpdateAnimator()
     {
         float targetSpeed = 0f;
-        if (moveDirection.magnitude > 0)
+        if (moveDirection.magnitude > 0.01f)
         {
             targetSpeed = Input.GetButton("Run") ? 2f : 1f;
         }
 
+        // Smoothly blend to the target speed value
         currentAnimatorSpeed = Mathf.Lerp(currentAnimatorSpeed, targetSpeed, blendSpeed * Time.deltaTime);
+
+        // Ensure we zero out the animator speed when it gets close enough to 0 to avoid flipping values
+        if (Mathf.Abs(currentAnimatorSpeed) < 0.01f)
+        {
+            currentAnimatorSpeed = 0f;
+        }
+
         animator.SetFloat("Speed", currentAnimatorSpeed);
     }
 }
