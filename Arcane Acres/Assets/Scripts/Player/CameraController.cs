@@ -48,14 +48,16 @@ public class CameraController : MonoBehaviour
     {
         float verticalInput = Input.GetAxis("Mouse Y") * verticalRotationSpeed * inputSensitivity;
         currentVerticalAngle += verticalInput;
-        currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, 30f, 60f); // Clamp vertical angle to prevent extreme tilting
+        currentVerticalAngle = Mathf.Clamp(currentVerticalAngle, 30f , 60f); // Clamp vertical angle to prevent extreme tilting
     }
 
     void HandleCameraZoom()
     {
         float scrollInput = Input.GetAxis("Mouse ScrollWheel") * inputSensitivity;
-        Camera.main.orthographicSize -= scrollInput * zoomSpeed;
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minZoom, maxZoom);
+        offset.y -= scrollInput * zoomSpeed;
+        offset.y = Mathf.Clamp(offset.y, minZoom, maxZoom);
+        //Camera.main.orthographicSize -= scrollInput * zoomSpeed;
+        //Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize, minZoom, maxZoom);
     }
 
     void UpdateCameraPosition()
