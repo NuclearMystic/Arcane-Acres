@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3321066981126233070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7441542769208093913}
+  m_Layer: 0
+  m_Name: LookAt
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7441542769208093913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3321066981126233070}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.458, z: 0.41}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5049631653929175389}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4673268853976122297
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,7 +175,7 @@ GameObject:
   - component: {fileID: 5623899131421591931}
   m_Layer: 0
   m_Name: Player_Female
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,13 +188,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8480636562838835699}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7939814, z: -0, w: 0.6079421}
+  m_LocalRotation: {x: 0, y: -0.79397976, z: 0, w: 0.60794425}
   m_LocalPosition: {x: 592.76, y: 34.04, z: 236.34013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 655237879990670698}
   - {fileID: 252541070688396474}
+  - {fileID: 578805452387971913}
+  - {fileID: 7441542769208093913}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -105.118, z: 0}
 --- !u!95 &5510893389024087395
@@ -175,8 +207,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8480636562838835699}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: f0a71db74f641844e9d8989d5f038e7c, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8badb7d628aff0747b5019c9458f9fdc, type: 2}
+  m_Avatar: {fileID: 9000000, guid: d7fbe7d6b0260174cbc0edfed70d07ab, type: 3}
+  m_Controller: {fileID: 9100000, guid: 3d06b832cf37f35479f9349a5eab5467, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -225,15 +257,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9749de4e24b42f4d877e0df6655abc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 2.5
+  walkSpeed: 2
   runSpeed: 5
-  blendSpeed: 5
-  gravity: -9.81
-  groundCheckDistance: 0.2
+  playerRotationSpeed: 15
+  jumpHeight: 5
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  playerRotationSpeed: 15
+  isGrounded: 0
   isTargetLock: 0
 --- !u!114 &5623899131421591931
 MonoBehaviour:
@@ -248,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   footstepSFX: {fileID: 2274990826833593690}
---- !u!1001 &1053110158965879425
+--- !u!1001 &1117716256713708706
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -311,25 +342,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Model_Human_Female
       objectReference: {fileID: 0}
-    - target: {fileID: 1630794972795428178, guid: d7fbe7d6b0260174cbc0edfed70d07ab,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: f04c65d234f0a7a48aca275345dea379, type: 2}
-    - target: {fileID: 9129442835357820122, guid: d7fbe7d6b0260174cbc0edfed70d07ab,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 26d7ad176f0646d4d9ee19787cfb0983, type: 2}
-    m_RemovedComponents:
-    - {fileID: 5866666021909216657, guid: d7fbe7d6b0260174cbc0edfed70d07ab, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7fbe7d6b0260174cbc0edfed70d07ab, type: 3}
---- !u!4 &655237879990670698 stripped
+--- !u!4 &578805452387971913 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d7fbe7d6b0260174cbc0edfed70d07ab,
     type: 3}
-  m_PrefabInstance: {fileID: 1053110158965879425}
+  m_PrefabInstance: {fileID: 1117716256713708706}
   m_PrefabAsset: {fileID: 0}
