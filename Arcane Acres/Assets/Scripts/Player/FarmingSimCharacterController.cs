@@ -22,7 +22,7 @@ public class FarmingSimCharacterController : MonoBehaviour
 
     [Header("Layer Masks")]
     [Tooltip("Layer mask to identify what counts as ground.")]
-    public LayerMask[] groundLayers;
+    public LayerMask groundLayers;
 
     [Header("Bools")]
     [SerializeField]
@@ -124,18 +124,15 @@ public class FarmingSimCharacterController : MonoBehaviour
     void HandleGravity()
     {
         // Check if the player is grounded
-        foreach(LayerMask layermask in groundLayers)
+        if (Physics.CheckSphere(transform.position, 0.2f, groundLayers))
         {
-            if(Physics.CheckSphere(transform.position, 0.3f, layermask))
-            {
-                isGrounded = true;
-            }
-            else
-            {
-                isGrounded = false;
-            }
-        
+            isGrounded = true;
         }
+        else
+        {
+            isGrounded = false;
+        }
+
         animator.SetBool("isGrounded", isGrounded);
 
         if (isGrounded && velocity.y < 0)
