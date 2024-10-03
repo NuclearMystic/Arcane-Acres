@@ -5,26 +5,28 @@ using UnityEngine;
 
 public class UIController : MonoBehaviour
 {
-    public GameObject inventoryPanel;
+    public GameObject playerMenu;
 
     private void Update()
     {
         if (Input.GetButtonDown("PlayerMenu"))
         {
-            ToggleInventoryPanel();
+            TogglePlayerMenu();
             GameManager.instance.ToggleCursorLock();
         }
     }
 
-    private void ToggleInventoryPanel()
+    private void TogglePlayerMenu()
     {
-        if(inventoryPanel.activeSelf)
+        if(playerMenu.activeSelf)
         {
-            inventoryPanel.SetActive(false);
+            playerMenu.SetActive(false);
+            Time.timeScale = 1f;
         }
         else
         {
-            inventoryPanel.SetActive(true);
+            playerMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
     }
 }
