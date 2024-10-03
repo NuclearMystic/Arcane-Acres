@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform player; // Reference to the player or camera target
+    public Transform lookAtTarget; // Reference to the player or camera target
     public float cameraRotationSpeed = 30f; // Speed of camera rotation around the player
     public float verticalRotationSpeed = 15f; // Speed of vertical camera rotation
     public float zoomSpeed = 5f;
@@ -20,7 +20,7 @@ public class CameraController : MonoBehaviour
 
     void Start()
     {
-        characterController = player.GetComponent<FarmingSimCharacterController>();
+        characterController = GameObject.FindWithTag("Player").GetComponent<FarmingSimCharacterController>();
         currentVerticalAngle = transform.eulerAngles.x;
         currentHorizontalAngle = transform.eulerAngles.y;
         currentRotation = transform.rotation; // Initialize the current rotation
@@ -69,10 +69,10 @@ public class CameraController : MonoBehaviour
         currentRotation = Quaternion.Slerp(currentRotation, targetRotation, Time.deltaTime * rotationSmoothing);
 
         // Update the camera's position based on the smoothed rotation
-        transform.position = player.position + currentRotation * offset;
+        transform.position = lookAtTarget.position + currentRotation * offset;
 
         // Ensure the camera is looking at the player
-        transform.LookAt(player.position);
+        transform.LookAt(lookAtTarget.position);
     }
 
     void PreventCameraCollision()
@@ -80,7 +80,7 @@ public class CameraController : MonoBehaviour
         RaycastHit hit;
 
         // Raycast from the player towards the camera
-        if (Physics.Raycast(player.position, transform.position - player.position, out hit, offset.magnitude, collisionLayers))
+        if (Physics.Raycast(lookAtTarget.position, transform.position - lookAtTarget.position, out hit, offset.magnitude, collisionLayers))
         {
             // Adjust the camera's position to the hit point
             transform.position = hit.point;

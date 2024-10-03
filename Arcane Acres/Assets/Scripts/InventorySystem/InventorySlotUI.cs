@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
-using System.Collections;
 
 public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -50,15 +49,20 @@ public class InventorySlotUI : MonoBehaviour, IPointerClickHandler, IPointerEnte
     public void OnPointerExit(PointerEventData eventData)
     {
         isMouseOver = false;
-        StartCoroutine(CheckMouseExit());
     }
 
-    private IEnumerator CheckMouseExit()
+    void Update()
     {
-        yield return new WaitForSeconds(0.1f);
-        if (!isMouseOver && !inventoryUI.IsMouseOverPopup())
+        // Check if the mouse is clicked outside of the slot and popup
+        if (Input.GetMouseButtonDown(0) && !isMouseOver && !IsPointerOverUIElement())
         {
             inventoryUI.HidePopup();
         }
+    }
+
+    private bool IsPointerOverUIElement()
+    {
+        // Check if the pointer is over any UI element in the popup
+        return EventSystem.current.IsPointerOverGameObject();
     }
 }

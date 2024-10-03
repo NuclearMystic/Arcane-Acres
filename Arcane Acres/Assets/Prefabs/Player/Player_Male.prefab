@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 7507652003686839308}
   m_Layer: 0
   m_Name: Body
-  m_TagString: Untagged
+  m_TagString: PlayerBody
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1064,15 +1064,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8497856364534919764}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0.7939814, z: -0, w: 0.6079421}
-  m_LocalPosition: {x: 592.76, y: 34.04, z: 236.34013}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2673660757897534132}
   - {fileID: 4791599827218363861}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -105.118, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &8259069470581596217
 Animator:
   serializedVersion: 5
@@ -1134,13 +1134,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 2.5
   runSpeed: 5
-  blendSpeed: 5
-  gravity: -9.81
-  groundCheckDistance: 0.2
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
   playerRotationSpeed: 15
+  jumpHeight: 5
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  isGrounded: 0
   isTargetLock: 0
 --- !u!114 &1328582232831195059
 MonoBehaviour:

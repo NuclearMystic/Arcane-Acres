@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed4a35cc9c88fa945a5e8a2f80bf623f, type: 3}
+  m_Name: Hat_Wizards_Agrimancers
+  m_EditorClassIdentifier: 
+  equipSlot: 0
+  damageModifier: 0
+  itemName: Agrimancer's Hat
+  icon: {fileID: 21300000, guid: ecfd36f49deb3e14091f7697e73ae2e2, type: 3}
+  isDefaultItem: 1
+  prefab: {fileID: 1956921788048678258, guid: 5885825437090e84487f21b17f9ef44a, type: 3}
+  mesh: {fileID: 6503651533601717457, guid: 5885825437090e84487f21b17f9ef44a, type: 3}
+  isStackable: 0
+  itemType: 1
