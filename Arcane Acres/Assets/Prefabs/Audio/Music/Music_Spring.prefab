@@ -158,6 +158,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d221c50bf4fd9434fa8ca8e0de5c7a56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerTime: 8:00 AM
+  triggerTime: 8:00 PM
   audioTrack: {fileID: 254925335077344817}
   fadeDuration: 1000
