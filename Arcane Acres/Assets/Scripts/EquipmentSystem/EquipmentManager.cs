@@ -13,7 +13,7 @@ public class EquipmentManager : MonoBehaviour
 
     #endregion
 
-    public Item[] defaultItems;
+    public Item[] startingEquipment;
     public SkinnedMeshRenderer targetMesh;
     Item[] currentEquipment;
     SkinnedMeshRenderer[] currentMeshes;
@@ -34,7 +34,7 @@ public class EquipmentManager : MonoBehaviour
             targetMesh = GameObject.FindWithTag("PlayerBody").GetComponent<SkinnedMeshRenderer>();
         }
 
-        EquipDefaultItems();
+        EquipStartingGear();
     }
 
     public void Equip(Item newItem)
@@ -87,12 +87,12 @@ public class EquipmentManager : MonoBehaviour
             Unequip(i);
         }
 
-        EquipDefaultItems();
+        EquipStartingGear();
     }
 
-    void EquipDefaultItems()
+    void EquipStartingGear()
     {
-        foreach (Item item in defaultItems)
+        foreach (Item item in startingEquipment)
         {
             Equip(item);
         }

@@ -12,6 +12,7 @@ public class Inventory : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            Debug.Log("inventory instance created.");
         }
         else
         {
