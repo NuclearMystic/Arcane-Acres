@@ -426,7 +426,7 @@ GameObject:
   - component: {fileID: 5859440506362725}
   - component: {fileID: 6303338199260102283}
   m_Layer: 0
-  m_Name: Model_WaterWell
+  m_Name: Prefab_WaterWell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
