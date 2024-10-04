@@ -3,8 +3,21 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
+    public static Inventory instance;
     public List<InventorySlot> inventorySlots = new List<InventorySlot>();
     public int maxSlots = 20; // Define the maximum number of slots
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     public void AddItem(Item item, int quantity = 1)
     {

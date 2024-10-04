@@ -4,10 +4,37 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance { get; private set; }
+
+    public PlayerData playerData;
+    public OptionsSettings optionsSettings;
+
+    void Awake()
+    {
+        // Ensure there is only one instance of GameManager
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
         DontDestroyOnLoad(this.gameObject);
+        if(playerData == null)
+        {
+            playerData = new PlayerData();
+        }
+        if(optionsSettings == null)
+        {
+            optionsSettings = new OptionsSettings();
+        }
         ToggleCursorLock();
     }
 

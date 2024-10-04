@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -14,10 +15,16 @@ public class TimeManager : MonoBehaviour
 
     private float dayLengthInSeconds;
     private float currentTimeOfDay; // Current time of day as a fraction (0 to 1)
+    private int totalDaysPassed = 0; // Total days passed in the game world
+
+    private float previousMorning = 5f / 24f; // 5 AM normalized in the 0-1 scale
+    private bool morningTriggered = false; // To ensure morning logic happens only once per day
+
+    public static event Action OnMorningUpdate; // Event triggered at 5:00 AM
 
     void Awake()
     {
-        // Ensure that there is only one instance of TimeManager
+        // Ensure there is only one instance of TimeManager
         if (Instance == null)
         {
             Instance = this;
@@ -31,32 +38,57 @@ public class TimeManager : MonoBehaviour
     void Start()
     {
         dayLengthInSeconds = dayLengthInMinutes * 60f;
-        currentTimeOfDay = initialTimeOfDay % 1; // Ensure it wraps around correctly
+        currentTimeOfDay = initialTimeOfDay % 1; // Wrap around correctly if time exceeds 1
     }
 
     void Update()
     {
+        // Advance the time based on the current time scale and day length
         currentTimeOfDay += (Time.deltaTime / dayLengthInSeconds) * timeScale;
-        currentTimeOfDay %= 1; // Loop back to 0 after 1
 
-        // Update the UI text element
+        // Loop the time back to 0 after 1 full day
+        if (currentTimeOfDay >= 1f)
+        {
+            currentTimeOfDay %= 1f;
+            totalDaysPassed++;
+            morningTriggered = false; // Reset the morning trigger for the new day
+        }
+
+        // Update the UI clock (optional)
         if (clockText != null)
         {
             clockText.text = GetFormattedTimeOfDay();
         }
 
-        // Broadcast the time change to other scripts
+        // Trigger the morning update if it's 5:00 AM
+        if (IsMorningTime() && !morningTriggered)
+        {
+            TriggerMorningUpdate();
+        }
+
+        // Broadcast the time change to other systems (optional shader or lighting effects)
         Shader.SetGlobalFloat("_TimeOfDay", currentTimeOfDay);
     }
 
-    public float GetCurrentTimeOfDay()
+    // Check if it's the morning time (5:00 AM)
+    private bool IsMorningTime()
     {
-        return currentTimeOfDay;
+        return currentTimeOfDay >= previousMorning && currentTimeOfDay < previousMorning + 0.01f;
     }
 
+    // Trigger the morning update event for crops
+    private void TriggerMorningUpdate()
+    {
+        if (OnMorningUpdate != null)
+        {
+            OnMorningUpdate();  // Notify any subscribers (e.g., CropManager)
+        }
+        morningTriggered = true;  // Ensure this only happens once per day
+    }
+
+    // Get the formatted time of day (for display purposes)
     public string GetFormattedTimeOfDay()
     {
-        // Convert time of day (0 to 1) to hours and minutes
         int totalMinutes = Mathf.FloorToInt(currentTimeOfDay * 24 * 60);
         int hours = totalMinutes / 60;
         int minutes = totalMinutes % 60;
@@ -65,40 +97,34 @@ public class TimeManager : MonoBehaviour
 
         if (use24HourFormat)
         {
-            // Format time as HH:MM in 24-hour format
             timeString = string.Format("{0:00}:{1:00}", hours, minutes);
         }
         else
         {
-            // Format time as HH:MM AM/PM in 12-hour format
             string period = hours >= 12 ? "PM" : "AM";
             hours = hours % 12;
-            if (hours == 0) hours = 12; // Convert 0 hours to 12 for 12-hour format
+            if (hours == 0) hours = 12; // Handle midnight as 12 AM
             timeString = string.Format("{0:00}:{1:00} {2}", hours, minutes, period);
         }
 
         return timeString;
     }
 
-    public int GetTotalMinutesOfDay(string formattedTime)
+    // Get the total days passed in the game world
+    public int GetTotalDaysPassed()
     {
-        string[] parts = formattedTime.Split(' ');
-        string[] timeParts = parts[0].Split(':');
-        int hours = int.Parse(timeParts[0]);
-        int minutes = int.Parse(timeParts[1]);
+        return totalDaysPassed;
+    }
 
-        if (parts.Length > 1) // 12-hour format with AM/PM
-        {
-            if (parts[1] == "PM" && hours != 12)
-            {
-                hours += 12;
-            }
-            else if (parts[1] == "AM" && hours == 12)
-            {
-                hours = 0;
-            }
-        }
+    // Get the current time of day in the 0-1 range
+    public float GetCurrentTimeOfDay()
+    {
+        return currentTimeOfDay;
+    }
 
-        return hours * 60 + minutes;
+    // Get the normalized value for 5:00 AM in the 0-1 range
+    public float GetPreviousMorning()
+    {
+        return previousMorning;
     }
 }

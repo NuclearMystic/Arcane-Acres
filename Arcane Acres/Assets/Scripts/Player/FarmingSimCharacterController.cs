@@ -1,22 +1,42 @@
+using System;
 using UnityEngine;
 
 public class FarmingSimCharacterController : MonoBehaviour
 {
-    public float walkSpeed = 2f;
-    public float runSpeed = 4f;
-    public float blendSpeed = 5f; // Speed at which to blend between animations
-    public float gravity = -9.81f; // Gravity value
-    public float groundCheckDistance = 0.2f; // Distance to check if the player is on the ground
-    public LayerMask groundLayer; // Layer mask to identify what counts as ground
-    public float playerRotationSpeed = 15f; // Speed of player rotation on the Y-axis
 
+    [Header("References")]
+    [Tooltip("Reference to player's animator.")]
     private Animator animator;
+    [Tooltip("Reference to player's character controller.")]
     private CharacterController controller;
-    private Vector3 moveDirection;
-    private float currentAnimatorSpeed;
+
+    [Header("Variables")]
+    [Tooltip("How fast the player walks.")]
+    public float walkSpeed = 2f;
+    [Tooltip("How fast the player runs.")]
+    public float runSpeed = 4f;
+    [Tooltip("Speed of player rotation on the Y-axis.")]
+    public float playerRotationSpeed = 15f;
+    [Tooltip("How high the player can jump.")]
+    public float jumpHeight = 5;
+
+    [Header("Layer Masks")]
+    [Tooltip("Layer mask to identify what counts as ground.")]
+    public LayerMask groundLayers;
+
+    [Header("Bools")]
+    [SerializeField]
+    [Tooltip("Is the player in contact with the ground layer?")]
     private bool isGrounded;
-    private Vector3 velocity;
+    [Tooltip("Is the player locked on to a target?")]
     public bool isTargetLock;
+
+    // Private variables
+    private float currentAnimatorSpeed;
+
+    // Vector3s
+    private Vector3 moveDirection;
+    private Vector3 velocity;
 
     void Start()
     {
@@ -28,8 +48,26 @@ public class FarmingSimCharacterController : MonoBehaviour
     void Update()
     {
         HandleMovement();
+        HandleJump();
         HandleGravity();
         UpdateAnimator();
+    }
+
+    private void HandleJump()
+    {
+        if (Input.GetButtonDown("Jump"))
+        {
+            animator.SetTrigger("Jump");
+        }
+    }
+
+    public void Jump()
+    {
+        if (isGrounded)
+        {
+            // Calculate jump velocity based on jump height and gravity
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * Physics.gravity.y);
+        }
     }
 
     void HandleMovement()
@@ -86,7 +124,16 @@ public class FarmingSimCharacterController : MonoBehaviour
     void HandleGravity()
     {
         // Check if the player is grounded
-        isGrounded = Physics.CheckSphere(transform.position, groundCheckDistance, groundLayer);
+        if (Physics.CheckSphere(transform.position, 0.2f, groundLayers))
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
+
+        animator.SetBool("isGrounded", isGrounded);
 
         if (isGrounded && velocity.y < 0)
         {
@@ -94,7 +141,7 @@ public class FarmingSimCharacterController : MonoBehaviour
         }
 
         // Apply gravity
-        velocity.y += gravity * Time.deltaTime;
+        velocity.y += Physics.gravity.y * Time.deltaTime;
         controller.Move(velocity * Time.deltaTime);
     }
 
@@ -107,7 +154,7 @@ public class FarmingSimCharacterController : MonoBehaviour
         }
 
         // Smoothly blend to the target speed value
-        currentAnimatorSpeed = Mathf.Lerp(currentAnimatorSpeed, targetSpeed, blendSpeed * Time.deltaTime);
+        currentAnimatorSpeed = Mathf.Lerp(currentAnimatorSpeed, targetSpeed, 5 * Time.deltaTime);
 
         // Ensure we zero out the animator speed when it gets close enough to 0 to avoid flipping values
         if (Mathf.Abs(currentAnimatorSpeed) < 0.01f)
