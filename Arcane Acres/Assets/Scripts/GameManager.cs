@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         instance = this;
+
         DontDestroyOnLoad(this.gameObject);
+
         if(playerData == null)
         {
             playerData = new PlayerData();
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
         {
             optionsSettings = new OptionsSettings();
         }
+
         ToggleCursorLock();
     }
 
