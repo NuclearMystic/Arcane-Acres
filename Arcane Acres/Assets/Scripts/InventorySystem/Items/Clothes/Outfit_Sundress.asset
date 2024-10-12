@@ -15,8 +15,7 @@ MonoBehaviour:
   equipSlot: 1
   damageModifier: 0
   itemName: Simple Sundress
-  icon: {fileID: 21300000, guid: ecfd36f49deb3e14091f7697e73ae2e2, type: 3}
-  isDefaultItem: 1
+  icon: {fileID: 21300000, guid: ad755ed629a31d74ea175c721c12cd02, type: 3}
   prefab: {fileID: 81643346783505413, guid: f6f056d08d890c14097fd41f954d2f4f, type: 3}
   mesh: {fileID: 1421728946089134782, guid: f6f056d08d890c14097fd41f954d2f4f, type: 3}
   isStackable: 0
