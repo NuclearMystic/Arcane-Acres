@@ -80,13 +80,13 @@ public class CharacterCreationCameraController : MonoBehaviour
 
     void LockCursor()
     {
-        Cursor.lockState = CursorLockMode.Locked;  // Lock the cursor to the center of the screen
-        Cursor.visible = false;                   // Hide the cursor
+        GameManager.instance.ToggleCursorLock();  // Lock the cursor to the center of the screen
+        //Cursor.visible = false;                   // Hide the cursor
     }
 
     void UnlockCursor()
     {
-        Cursor.lockState = CursorLockMode.None;   // Unlock the cursor
-        Cursor.visible = true;                    // Show the cursor
+        GameManager.instance.ToggleCursorLock();   // Unlock the cursor
+        //Cursor.visible = true;                    // Show the cursor
     }
 }

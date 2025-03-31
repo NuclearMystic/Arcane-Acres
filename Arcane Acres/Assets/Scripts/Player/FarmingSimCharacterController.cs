@@ -41,7 +41,7 @@ public class FarmingSimCharacterController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        animator = GetComponent<Animator>();
+        animator = GetComponentInChildren<Animator>();
         currentAnimatorSpeed = 0f;
     }
 
@@ -101,7 +101,6 @@ public class FarmingSimCharacterController : MonoBehaviour
         {
             moveDirection.Normalize();
         }
-
         float speed = Input.GetButton("Run") ? runSpeed : walkSpeed;
         moveDirection *= speed;
 

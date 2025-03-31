@@ -4,6 +4,13 @@ using UnityEngine.UI;
 
 public class CharacterCreationUI : MonoBehaviour
 {
+    // reference to the 3d male model
+    [SerializeField]
+    private GameObject maleModel;
+    // reference to the 3d female model;
+    [SerializeField]
+    private GameObject femaleModel;
+
     public TMP_InputField nameInputField; // Reference to the Input Field UI element
     public string playerName; // Variable to store the player's name
 
@@ -66,6 +73,21 @@ public class CharacterCreationUI : MonoBehaviour
     public void SetPlayerHairColor()
     {
         GameManager.instance.playerData.hairColor = hairColors[(int)hairColorSlider.value];
-        Debug.Log("HairColor " + hairSlider.value + " set as player hari color.");
+        Debug.Log("HairColor " + hairSlider.value + " set as player hair color.");
+    }
+
+    public void SetGenderToMale()
+    {
+        femaleModel.SetActive(false);
+        maleModel.SetActive(true);
+        GameManager.instance.playerData.genderPrefab = maleModel;
+        
+    }
+
+    public void SetGenderToFemale()
+    {
+        maleModel.SetActive(false);
+        femaleModel.SetActive(true);
+        GameManager.instance.playerData.genderPrefab = femaleModel;
     }
 }
