@@ -29,13 +29,4 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
-    public void WaterCrops(Crop crop, int waterAmount)
-    {
-        crop.WaterCrop(waterAmount);
-    }
-
-    public void HarvestCrop(Crop crop)
-    {
-        playerAnimator.SetTrigger("Harvest");
-    }
 }

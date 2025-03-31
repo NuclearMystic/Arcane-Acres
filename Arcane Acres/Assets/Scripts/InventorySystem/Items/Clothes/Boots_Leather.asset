@@ -15,7 +15,7 @@ MonoBehaviour:
   equipSlot: 2
   damageModifier: 0
   itemName: Leather Boots
-  icon: {fileID: 21300000, guid: ecfd36f49deb3e14091f7697e73ae2e2, type: 3}
+  icon: {fileID: 21300000, guid: 96a5300cbbce64b4c907f299bee8753e, type: 3}
   prefab: {fileID: 5595617501275058950, guid: 11408a3d466030943bc94049e1e51c35, type: 3}
   mesh: {fileID: 2914539357884035010, guid: 11408a3d466030943bc94049e1e51c35, type: 3}
   isStackable: 0

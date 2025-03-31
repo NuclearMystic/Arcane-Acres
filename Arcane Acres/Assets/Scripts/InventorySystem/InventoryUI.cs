@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class InventoryUI : MonoBehaviour
 {
-    public Inventory inventory;
+    private Inventory inventory;
     public GameObject inventorySlotPrefab;
     public Transform inventorySlotParent;
 
@@ -30,6 +30,7 @@ public class InventoryUI : MonoBehaviour
     private void Start()
     {
         itemPopupTransform = itemPopup.GetComponent<RectTransform>();
+        RefreshUI();
     }
 
     void OnDisable()
@@ -42,8 +43,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (inventory == null)
         {
-            Debug.LogError("Inventory is not assigned.");
-            return;
+            inventory = Inventory.instance;
         }
 
         // Deactivate existing UI elements instead of destroying them
@@ -120,6 +120,7 @@ public class InventoryUI : MonoBehaviour
     {
         Debug.Log("Used item: " + slot.item.itemName);
         slot.item.Use();
+        RefreshUI();
         HidePopup();
     }
 

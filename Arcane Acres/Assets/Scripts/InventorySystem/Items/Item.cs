@@ -83,6 +83,7 @@ public enum ItemType
 public enum EquipmentSlot
 {
     Headwear,
+    Hair,
     Outfit,
     Footwear,
     Belt,
